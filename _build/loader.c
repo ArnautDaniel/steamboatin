@@ -1,7 +1,11 @@
-#include <raylib.h>
 #include "init.h"
 
 extern struct AssetMap* asset_map;
+
+// This current version just uses a linked list.  However, other options may be quite faster.
+// Whenever I have an idea about improvements I'll post it here...
+//
+//
 
 struct AssetMap* FindInMap(struct AssetMap* asset_map, int id) {
 	if (asset_map == NULL) {
@@ -56,8 +60,10 @@ int CreateTexture(const char* filename) {
 
 int CreateNPC(int x, int y, int texture_id) {
 	struct Character* character = MemAlloc(sizeof(struct Character));
-	character->x = x;
-	character->y = y;
+	struct Vector2* vec = MemAlloc(sizeof(struct Vector2));
+	vec->x = x;
+	vec->y = y;
+	character->position = vec;
 	character->texture_id = texture_id;
 	return AddAssetMap(asset_map, character, NPC_TYPE);
 }

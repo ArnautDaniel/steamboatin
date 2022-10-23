@@ -1,4 +1,3 @@
-#include <raylib.h>
 #include "init.h"
 
 int main() {
@@ -9,8 +8,8 @@ int main() {
 	InitWindow(width, height, "That's Steamboatin Baby!");
 	InitGame();
 	while (!WindowShouldClose()) {
-		UpdateScreen();
-		RenderScreen();
+		Update();
+		Render();
 	}
 	return 0;
 }

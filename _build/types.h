@@ -1,12 +1,12 @@
 #pragma once
-#include <raylib.h>
 
 enum type_tag { FILE_TYPE, NPC_TYPE };
+enum rotation_type { UP = 0, RIGHT = 90, DOWN = 180, LEFT = 270 };
 
 struct Character {
-	int x;
-	int y;
+	struct Vector2* position;
 	int texture_id;
+	int rotation;
 };
 
 struct AssetMap {
