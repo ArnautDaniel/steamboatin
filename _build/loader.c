@@ -68,6 +68,21 @@ int CreateNPC(int x, int y, int texture_id) {
 	return AddAssetMap(asset_map, character, NPC_TYPE);
 }
 
+int CreateTurrent(struct Character* boat, struct Character* target, int texture_id) {
+	struct Turrent* turrent = MemAlloc(sizeof(struct Turrent));
+	turrent->postition = boat->position;
+	turrent->target = target;
+	turrent->texture_id = texture_id;
+	return AddAssetMap(asset_map, turrent, TURRENT_TYPE);
+}
+
+int CreateGrid(int x, int y) {
+  struct Grid* grid = MemAlloc(sizeof(struct Grid));
+  grid->x = x;
+  grid->y = y;
+  return AddAssetMap(asset_map, grid, GRID_TYPE);
+}
+
 struct Texture* FindTexture(int id) {
 	struct AssetMap* asset = FindInMap(asset_map, id);
 	return (struct Texture*) asset->data;
@@ -105,6 +120,6 @@ int AddAssetMap(struct AssetMap* asset_ptr, void* asset, int type) {
 		asset_ptr->next = asset_next;
 		return asset_next->id;
 	}
-
+  MemFree(asset_next);
 	return AddAssetMap(asset_ptr->next, asset, type);
 };

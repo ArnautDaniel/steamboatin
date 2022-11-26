@@ -6,5 +6,7 @@
 #include "input.h"
 #include "player.h"
 
+#define increment 25
+
 void InitGame();
 void Update();

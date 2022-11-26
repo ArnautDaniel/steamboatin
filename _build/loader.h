@@ -5,6 +5,8 @@ struct AssetMap* FindAllByType(int type);
 void ClearAssetMap(struct AssetMap* assets);
 int CreateTexture(const char* filename);
 int CreateNPC(int x, int y, int texture_id);
+int CreateTurrent(struct Character* boat, struct Character* target, int texture_id);
+int CreateGrid(int x, int y);
 struct Texture* FindTexture(int id);
 struct Character* FindNPC(int id);
 int AddAssetMap(struct AssetMap* asset_map, void* asset, int type);
