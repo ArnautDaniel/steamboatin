@@ -55,27 +55,76 @@ int CreateTexture(const char* filename) {
 	texture_stack->id = texture.id;
 	texture_stack->mipmaps = texture.mipmaps;
 	texture_stack->width = texture.width;
-	return AddAssetMap(asset_map, texture_stack, FILE_TYPE);
+	return AddAssetMap(asset_map, texture_stack, FILE);
 }
 
-int CreateNPC(int x, int y, int texture_id) {
-	struct Character* character = MemAlloc(sizeof(struct Character));
-	struct Vector2* vec = MemAlloc(sizeof(struct Vector2));
-	vec->x = x;
-	vec->y = y;
-	character->position = vec;
-	character->texture_id = texture_id;
-	return AddAssetMap(asset_map, character, NPC_TYPE);
+// Creates an empty game object.
+struct GameObject* CreateGameObject(int tag) {
+  struct GameObject* go = MemAlloc(sizeof(struct GameObject));
+
+  go->moveable = NULL;
+  go->effects = NULL;
+  go->visuals = NULL;
+
+  go->id = AddAssetMap(asset_map, go, tag);
+  return go;
+}
+
+struct Moveable* AddMoveable(struct GameObject* go, float x, float y, float dirx, float diry, int speed) {
+  struct Moveable* moveable = MemAlloc(sizeof(struct Moveable));
+
+  struct Vector2* vecPosition = MemAlloc(sizeof(struct Vector2));
+  vecPosition->x = x;
+  vecPosition->y = y;
+  moveable->position = vecPosition;
+
+  struct Vector2* vecDirection = MemAlloc(sizeof(struct Vector2));
+  vecDirection->x = dirx;
+  vecDirection->y = diry;
+  moveable->direction = vecDirection;
+
+  moveable->speed = speed;
+  return moveable;
+}
+
+struct Effectables* AddEffectable(struct GameObject* go, bool collisions) {
+  struct Effectables* effects = MemAlloc(sizeof(struct Effectables));
+  effects->collisions = collisions;
+  return effects;
+}
+
+struct Visuals* AddVisuals(struct GameObject* go, int texture_id, int rotation, float scale, Color color) {
+  struct Visuals* visuals = MemAlloc(sizeof(struct Visuals));
+  visuals->texture = FindTexture(texture_id);
+  visuals->rotation = rotation;
+  visuals->scale = scale;
+  visuals->color = color;
+  return visuals;
+}
+
+struct GameObject* CreateNPC() {
+  return CreateGameObject(NPC);
+}
+
+int CreateGrid(int x, int y) {
+  struct Grid* grid = MemAlloc(sizeof(struct Grid));
+  grid->x = x;
+  grid->y = y;
+  return AddAssetMap(asset_map, grid, GRID);
+}
+
+struct GameObject* CreateEnemy() {
+  return CreateGameObject(ENEMY);
 }
 
 struct Texture* FindTexture(int id) {
 	struct AssetMap* asset = FindInMap(asset_map, id);
-	return (struct Texture*) asset->data;
+	return (struct Texture*)asset->data;
 }
 
-struct Character* FindNPC(int id) {
+struct GameObject* FindGameObject(int id) {
 	struct AssetMap* asset = FindInMap(asset_map, id);
-	return (struct Character*) asset->data;
+	return (struct GameObject*)asset->data;
 }
 
 int AddAssetMap(struct AssetMap* asset_ptr, void* asset, int type) {
@@ -105,6 +154,6 @@ int AddAssetMap(struct AssetMap* asset_ptr, void* asset, int type) {
 		asset_ptr->next = asset_next;
 		return asset_next->id;
 	}
-
+  MemFree(asset_next);
 	return AddAssetMap(asset_ptr->next, asset, type);
 };

@@ -1,6 +1,3 @@
 #pragma once
-
-void RenderNPC(struct Character* npc);
-void RenderNPCS(struct AssetMap* npcs);
-
+void iRender(struct AssetMap* assets, void(*renderfunc)(struct AssetMap* asset));
 void Render();
