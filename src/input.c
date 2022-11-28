@@ -4,6 +4,7 @@
 
 extern int player_id;
 extern struct GameObject* player;
+extern struct GameObject* enemy;
 extern int canon_texture;
 extern int turrent_texture;
 
@@ -28,6 +29,7 @@ void HandleInput() {
     Vector2 vec2 = GetMousePosition();
     printf("MOUSE POSITION: %f %f\n", vec2.x, vec2.y);
     CreateNPC(vec2.x, vec2.y, turrent_texture);
+    enemy->effects->current_hp -= 1;
   }
 }
 

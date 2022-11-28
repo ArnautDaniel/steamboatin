@@ -7,7 +7,7 @@ int CreateTexture(const char* filename);
 struct GameObject* FindGameObject(int id);
 struct GameObject* CreateGameObject(int tag);
 struct Moveable* AddMoveable(struct GameObject* go, float x, float y, float dirx, float diry, int speed);
-struct Effectables* AddEffectable(struct GameObject* go, bool collisions);
+struct Effectables* AddEffectable(struct GameObject* go, bool collisions, int hp);
 struct Visuals* AddVisuals(struct GameObject* go, int texture_id, int rotation, float scale, Color color);
 struct GameObject* CreateNPC();
 struct GameObject* CreateEnemy();

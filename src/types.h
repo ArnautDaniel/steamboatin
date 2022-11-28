@@ -11,6 +11,10 @@ struct Moveable {
 
 struct Effectables {
   bool collisions;
+  bool flying;
+  int max_hp;
+  int current_hp;
+
 };
 
 struct Visuals {

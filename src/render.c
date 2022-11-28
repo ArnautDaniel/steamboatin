@@ -32,6 +32,15 @@ void RenderGameObject(struct AssetMap* asset) {
 
   Texture* texture = go->visuals->texture;
   DrawTextureEx(*texture, *go->moveable->position, 0, 0.2, RED);
+
+  if (go->effects == NULL) return;
+  float x = go->moveable->position->x;
+  float y = go->moveable->position->y + 40;
+
+  DrawRectangleLines(x, y, 40, 10, RED);
+  int max_hp = go->effects->max_hp;
+  int current_hp = go->effects->current_hp;
+  DrawRectangle(x + 2, y, ((float)current_hp/(float)max_hp) * 40, 10, GREEN);
   return;
 }
 

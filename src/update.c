@@ -13,10 +13,14 @@ int iCountEnemies(struct AssetMap* assets) {
 void MoveEnemies(struct AssetMap* assets, int count) {
   struct AssetMap* asset_next;
   for (int i = 0; i < count; i++) {
-    struct Moveable* enemy = ((struct GameObject*)assets->data)->moveable;
-    enemy->position->x += 1.0;
-    enemy->position->y += 1.0;
+    struct GameObject* enemy = assets->data;
     asset_next = assets->next;
+
+    if (enemy->moveable != NULL) {
+      enemy->moveable->position->x += 1.0;
+      enemy->moveable->position->y += 1.0;
+    }
+
     MemFree(assets);
     assets = asset_next;
   }
@@ -31,6 +35,6 @@ void HandleEnemies() {
 
 void Update() {
 	HandleInput();
-  //HandleEnemies();
+  HandleEnemies();
 	return;
 }

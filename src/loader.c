@@ -87,9 +87,11 @@ struct Moveable* AddMoveable(struct GameObject* go, float x, float y, float dirx
   return moveable;
 }
 
-struct Effectables* AddEffectable(struct GameObject* go, bool collisions) {
+struct Effectables* AddEffectable(struct GameObject* go, bool collisions, int hp) {
   struct Effectables* effects = MemAlloc(sizeof(struct Effectables));
   effects->collisions = collisions;
+  effects->max_hp = hp;
+  effects->current_hp = hp;
   return effects;
 }
 
@@ -156,4 +158,4 @@ int AddAssetMap(struct AssetMap* asset_ptr, void* asset, int type) {
 	}
   MemFree(asset_next);
 	return AddAssetMap(asset_ptr->next, asset, type);
-};
+}

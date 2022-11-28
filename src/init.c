@@ -1,6 +1,7 @@
 #include "init.h"
 
 struct GameObject* player = NULL;
+struct GameObject* enemy = NULL;
 struct AssetMap* asset_map;
 int gridsize;
 int canon_texture;
@@ -23,7 +24,12 @@ void InitGame() {
   player = CreateGameObject(NPC);
   player->moveable = AddMoveable(player, 100, 100, 0, 0, 10);
   player->visuals = AddVisuals(player, player_texture, 0, 1.0, RAYWHITE);
+  player->effects = AddEffectable(player, false, 100);
 
+  enemy = CreateEnemy();
+  enemy->moveable = AddMoveable(enemy, 100, 100, 1.0, 1.0, 10);
+  enemy->visuals = AddVisuals(enemy, enemy_texture, 0, 1.0, RAYWHITE);
+  enemy->effects = AddEffectable(enemy, true, 100);
 	return;
-};
+}
 
